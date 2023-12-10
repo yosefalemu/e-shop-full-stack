@@ -7,8 +7,7 @@ interface IParams {
 }
 
 const Product = ({ params }: { params: IParams }) => {
-  const productId = params.productId;
-  const singleProduct = products.find((item) => item.id === productId);
+  const singleProduct = products.find((item) => item.id === params.productId);
   console.log(singleProduct);
 
   return (

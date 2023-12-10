@@ -4,9 +4,12 @@ import { useCart } from "@/hooks/useCart";
 import Link from "next/link";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import Heading from "../components/Heading";
+import Button from "../components/Button";
+import ItemContent from "./ItemContent";
+import formatPrice from "@/utils/formatPrice";
 
 const CartClient = () => {
-  const { cartProducts } = useCart();
+  const { cartProducts, handleRemoveCart, cartTotalPrice } = useCart();
   if (!cartProducts || cartProducts.length === 0) {
     return (
       <div className="flex flex-col items-center">
@@ -21,13 +24,53 @@ const CartClient = () => {
   return (
     <div>
       <Heading text="Shopping Cart" center />
-      <div className="grid grid-cols-5 text-xs gap-4 pb-1 items-center mt-3">
-        <div className="col-span-2 justify-self-start">PRODUCT</div>
-        <div className="col-span-1 justify-self-center">PRICE</div>
-        <div className="col-span-1 justify-self-center">QUANTITY</div>
-        <div className="col-span-1 justify-self-end">TOTAL</div>
+      <div className="grid grid-cols-5 text-xs gap-4 pb-1 items-center mt-8">
+        <div className="col-span-2 justify-self-start font-semibold">
+          PRODUCT
+        </div>
+        <div className="col-span-1 justify-self-center font-semibold">
+          PRICE
+        </div>
+        <div className="col-span-1 justify-self-center font-semibold">
+          QUANTITY
+        </div>
+        <div className="col-span-1 justify-self-end font-semibold">TOTAL</div>
       </div>
       <hr />
+      <div>
+        {cartProducts &&
+          cartProducts.map((item) => {
+            return <ItemContent key={item.id} item={item} />;
+          })}
+      </div>
+      <hr />
+      <div className="md:flex mt-4 justify-between">
+        <div className="max-w-[90px]">
+          <Button
+            label="Clear cart"
+            outline
+            small
+            onClick={() => {
+              handleRemoveCart();
+            }}
+          />
+        </div>
+        <hr className="md:no-underline my-4" />
+        <div className="flex flex-col gap-2 text-sm items-start">
+          <div className="flex items-center gap-4 font-bold text-base">
+            <p>subtotal</p>
+            <p>{formatPrice(cartTotalPrice)}</p>
+          </div>
+          <p className="font-extralight text-slate-500">
+            Taxes and shipping calculated at checkout
+          </p>
+          <Button label="Checkout" onClick={() => {}} />
+          <Link href="/" className="flex items-center gap-2">
+            <IoMdArrowRoundBack />
+            <span>Continue shipping</span>
+          </Link>
+        </div>
+      </div>
     </div>
   );
 };

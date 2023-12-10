@@ -8,6 +8,8 @@ import { useCallback, useState, useEffect } from "react";
 import { useCart } from "@/hooks/useCart";
 import { FaCircleCheck } from "react-icons/fa6";
 import { useRouter } from "next/navigation";
+import formatPrice from "@/utils/formatPrice";
+import toast from "react-hot-toast";
 
 interface ProductDetailsProps {
   singleProduct: any;
@@ -64,6 +66,10 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ singleProduct }) => {
   );
 
   const handleQuantityIncrease = useCallback(() => {
+    if (cartProduct.quantity === 20) {
+      toast.error("Max quantity reached", { id: "error1" });
+      return;
+    }
     setCartProduct((prev) => {
       return { ...prev, quantity: cartProduct.quantity + 1 };
     });
@@ -123,7 +129,11 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ singleProduct }) => {
         </div>
         <div>
           <span className="font-semibold mr-2">Brand:</span>
-          <span>{singleProduct.brand}</span>
+          <span className="font-semibold">{singleProduct.brand}</span>
+        </div>
+        <div>
+          <span className="font-semibold mr-2">Price:</span>
+          <span>{formatPrice(singleProduct.price)}</span>
         </div>
         <div
           className={singleProduct.inStock ? "text-teal-400" : "text-rose-500"}

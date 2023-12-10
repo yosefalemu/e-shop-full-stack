@@ -23,7 +23,7 @@ const SetQuantity: React.FC<SetQuantityProps> = ({
         <button className={btnStyle} onClick={handleQuantityDecrease}>
           -
         </button>
-        <div>{cartProduct.quantity}</div>
+        <div className="font-semibold">{cartProduct.quantity}</div>
         <button className={btnStyle} onClick={handleQuantityIncrease}>
           +
         </button>
