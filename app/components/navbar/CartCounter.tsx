@@ -1,3 +1,4 @@
+"use client";
 import { useCart } from "@/hooks/useCart";
 import { FaCartShopping } from "react-icons/fa6";
 

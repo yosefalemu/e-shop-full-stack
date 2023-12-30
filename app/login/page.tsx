@@ -1,12 +1,14 @@
+import { getCurrentUser } from "@/actions/getCurrentUser";
 import Container from "../components/Container";
 import FormWrapper from "../components/FormWrapper";
 import LoginForm from "./LoginForm";
 
-const LogIn = () => {
+const LogIn = async () => {
+  const currentUser = await getCurrentUser();
   return (
     <Container>
       <FormWrapper>
-        <LoginForm />
+        <LoginForm currentUser={currentUser} />
       </FormWrapper>
     </Container>
   );
