@@ -96,9 +96,6 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ singleProduct }) => {
     }
   }, [cartProducts]);
 
-  console.log(cartProducts);
-  console.log(cartTotalQuantity);
-
   return (
     <div
       className="grid grid-cols-1 md:grid-cols-2 gap-12

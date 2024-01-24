@@ -47,7 +47,6 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
                       redirect: false,
                       callbackUrl: "/login",
                     });
-                    console.log(data);
                     router.push(data?.url);
                     router.refresh();
                   }}

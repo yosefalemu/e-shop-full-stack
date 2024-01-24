@@ -7,6 +7,7 @@ import {
   useEffect,
 } from "react";
 import toast from "react-hot-toast";
+import { json } from "stream/consumers";
 
 type cartContextType = {
   cartTotalQuantity: number;
@@ -17,6 +18,8 @@ type cartContextType = {
   handleRemoveCart: () => void;
   handleIncreaseCartQunatity: (product: CartProductType) => void;
   handleDecreaseCartQuantity: (product: CartProductType) => void;
+  paymentIntent: string | null;
+  handleSetPaymentIntent: (val: string | null) => void;
 };
 
 interface Props {
@@ -31,11 +34,15 @@ export const CartContextProvider = (props: Props) => {
   const [cartProducts, setCartProducts] = useState<CartProductType[] | null>(
     null
   );
+  const [paymentIntent, setPaymentIntent] = useState<string | null>(null);
 
   useEffect(() => {
     const itemProducts: any = localStorage.getItem("eShopCartProducts");
     const cartProducts: CartProductType[] | null = JSON.parse(itemProducts);
+    const eshopPaymentIntent: any = localStorage.getItem("eshopPaymentIntent");
+    const paymentIntent: string | null = JSON.parse(eshopPaymentIntent);
     setCartProducts(cartProducts);
+    setPaymentIntent(paymentIntent);
   }, []);
 
   useEffect(() => {
@@ -149,6 +156,14 @@ export const CartContextProvider = (props: Props) => {
     },
     [cartProducts]
   );
+  const handleSetPaymentIntent = useCallback(
+    (val: string | null) => {
+      setPaymentIntent(val);
+      localStorage.setItem("eshopPaymentIntent", JSON.stringify(val));
+    },
+    [cartProducts]
+  );
+
   const value = {
     cartTotalQuantity,
     cartTotalPrice,
@@ -158,6 +173,8 @@ export const CartContextProvider = (props: Props) => {
     handleRemoveCart,
     handleIncreaseCartQunatity,
     handleDecreaseCartQuantity,
+    paymentIntent,
+    handleSetPaymentIntent,
   };
   return <cartContext.Provider value={value} {...props} />;
 };

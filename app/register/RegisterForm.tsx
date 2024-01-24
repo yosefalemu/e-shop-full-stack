@@ -27,7 +27,6 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ currentUser }) => {
   });
   const onSubmitFunction: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
-    console.log("data", data);
     axios
       .post("/api/register", data)
       .then(() => {
