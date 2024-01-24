@@ -17,8 +17,6 @@ const ItemContent: React.FC<ItemContentProps> = ({ item }) => {
     cartTotalPrice,
     cartTotalQuantity,
   } = useCart();
-  console.log("cartTotalPrice", cartTotalPrice);
-  console.log("cartTotalQuantity", cartTotalQuantity);
 
   return (
     <>

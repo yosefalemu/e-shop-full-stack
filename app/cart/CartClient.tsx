@@ -7,8 +7,14 @@ import Heading from "../components/Heading";
 import Button from "../components/Button";
 import ItemContent from "./ItemContent";
 import formatPrice from "@/utils/formatPrice";
+import { useRouter } from "next/navigation";
+import { SafeUser } from "@/types";
 
-const CartClient = () => {
+interface CartClientProps {
+  currentUser: SafeUser | null;
+}
+const CartClient: React.FC<CartClientProps> = ({ currentUser }) => {
+  const router = useRouter();
   const { cartProducts, handleRemoveCart, cartTotalPrice } = useCart();
   if (!cartProducts || cartProducts.length === 0) {
     return (
@@ -64,7 +70,14 @@ const CartClient = () => {
           <p className="font-extralight text-slate-500">
             Taxes and shipping calculated at checkout
           </p>
-          <Button label="Checkout" onClick={() => {}} />
+          <Button
+            label={currentUser ? "Checkout" : "Login to checkout"}
+            onClick={() => {
+              {
+                currentUser ? router.push("/checkout") : router.push("/login");
+              }
+            }}
+          />
           <Link href="/" className="flex items-center gap-2">
             <IoMdArrowRoundBack />
             <span>Continue shipping</span>

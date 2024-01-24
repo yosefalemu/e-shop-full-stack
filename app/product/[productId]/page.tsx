@@ -8,8 +8,6 @@ interface IParams {
 
 const Product = ({ params }: { params: IParams }) => {
   const singleProduct = products.find((item) => item.id === params.productId);
-  console.log(singleProduct);
-
   return (
     <div className="p-8">
       <Container>
