@@ -19,9 +19,6 @@ const CheckOutClinet = () => {
   const [paymentSuccess, setPaymentSuccess] = useState(false);
   const { cartProducts, paymentIntent, handleSetPaymentIntent } = useCart();
 
-  console.log("payment intent", paymentIntent);
-  console.log("client secret", clientSecret);
-
   useEffect(() => {
     if (cartProducts) {
       setLoading(true);
@@ -35,8 +32,6 @@ const CheckOutClinet = () => {
         }),
       })
         .then((response) => {
-          console.log("response in checkout", response);
-
           setLoading(false);
           if (response.status === 401) {
             return router.push("/login");
@@ -44,16 +39,14 @@ const CheckOutClinet = () => {
           return response.json();
         })
         .then((data) => {
-          console.log("data in checkout", data);
           setClientSecret(data.paymentIntent.client_secret);
           handleSetPaymentIntent(data.paymentIntent.id);
         })
         .catch((error) => {
-          console.log("Error", error);
           return;
         });
     }
-  }, [cartProducts, paymentIntent]);
+  }, []);
 
   const options: StripeElementsOptions = {
     clientSecret,
